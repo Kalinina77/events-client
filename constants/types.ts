@@ -1,0 +1,1 @@
+export type SelectValueType = {value:string, label:string}

@@ -14,3 +14,52 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+.flex-gap{
+  gap: 1em;
+
+}
+
+.flex-ct{
+  gap: 250px;
+}
+
+.flex-exp{
+  gap: 50px;
+}
+select{
+ height: 47px;
+ flex-grow: 1;
+ box-sizing: border-box;
+}
+
+.Teams-Chart {
+  height: 800px;
+}
+
+tspan {
+  transform: rotateX(45deg);
+  
+}
+#chart-axis-1-tickLabels-0 {
+  transform: rotate(45deg);
+}
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  
+}
+
+.content {
+  position:fixed;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+
+}
