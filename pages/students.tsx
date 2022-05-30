@@ -125,7 +125,7 @@ const StudentsPage = () => {
                   </div>
                 </td>
                 <td>
-                  <Link href={`/student/edit/${x.id}`}>
+                  <Link href={`/student/edit/${x.id}`}passHref>
                     <svg
                       width="1em"
                       height="1em"

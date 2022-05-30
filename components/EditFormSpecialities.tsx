@@ -47,7 +47,7 @@ const EditFormSpecialities = (props: IEditForm) => {
         {...register("qualificationId")}
       >
         {qulification.map((x) => (
-          <option value={x.id}>{x.name}</option>
+          <option key={x.id} value={x.id}>{x.name}</option>
         ))}
       </select>
       <div className="input-group-append">

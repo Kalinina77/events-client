@@ -34,7 +34,7 @@ const EmployyeEdit = () => {
       };
       console.log(typeof id === "string");
       id && typeof id === "string" && void fetchEmployee(id);
-    }, []);
+    }, [id]);
   
     const onSubmit = async (data: unknown) => {
       if (!id || typeof id !== "string") {

@@ -90,7 +90,7 @@ const EditEmployeeForm = (props: IEditForm) => {
           })}
         >
           {position.map((x) => (
-            <option value={x.id}>{x.name}</option>
+            <option key={x.id} value={x.id}>{x.name}</option>
           ))}
         </select>
         <div className="input-group-append">

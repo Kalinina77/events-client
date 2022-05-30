@@ -6,11 +6,10 @@ import Select, { MultiValue } from "react-select";
 import { IPosition } from "../api/position";
 import { GetPositions } from "../api/post";
 
-
 interface IFilter {
   PositionIds: string[];
   searchTerm: string;
-} 
+}
 const Employee = () => {
   const [employee, setEmployee] = useState<IEmployee[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -19,7 +18,9 @@ const Employee = () => {
     PositionIds: [],
     searchTerm: "",
   });
-  const [selectValue, setSelectValue] = useState<MultiValue<SelectValueType>>([]);
+  const [selectValue, setSelectValue] = useState<MultiValue<SelectValueType>>(
+    []
+  );
   const [searchValue, setSearchValue] = useState("");
 
   console.log(selectedIds);
@@ -29,7 +30,7 @@ const Employee = () => {
       setEmployee(res);
     } catch {}
   }, [filter]);
-  
+
   useEffect(() => {
     void fetchEmployee();
   }, [fetchEmployee]);
@@ -59,10 +60,12 @@ const Employee = () => {
     } catch {}
   };
 
-  const SearchFilter =() => {
-    setFilter({PositionIds: selectValue.map((s) =>  s.value),  searchTerm: searchValue });
-
-  }
+  const SearchFilter = () => {
+    setFilter({
+      PositionIds: selectValue.map((s) => s.value),
+      searchTerm: searchValue,
+    });
+  };
   const optionsPosition = position.map((g) => ({
     value: g.id,
     label: g.name,
@@ -72,28 +75,30 @@ const Employee = () => {
       <div className="">
         <h1 className="d-flex justify-content-center">Сотрудники</h1>
         <div className="d-flex justify-content-start flex-gap pt-3">
-      <input
-        className="form-control col-4 mr-sm-2 w-25"
-        type="search"
-        placeholder="Поиск"
-        aria-label="Search"
-        
-        onChange={(s)=>setSearchValue(s.target.value)}
-      />
-      <Select
-          className="input-group-prepend  "
-          closeMenuOnSelect={false}
-          options={optionsPosition}
-          classNamePrefix="select"
-          value={selectValue}
-          onChange={(v) => setSelectValue(v)}
-          isMulti
-          placeholder="Выберите должность"
-        />{" "}
-      <button className="btn btn-outline-success ml-3" onClick={SearchFilter}>
-        Поиск
-      </button>
-      </div>
+          <input
+            className="form-control col-4 mr-sm-2 w-25"
+            type="search"
+            placeholder="Поиск"
+            aria-label="Search"
+            onChange={(s) => setSearchValue(s.target.value)}
+          />
+          <Select
+            className="input-group-prepend  "
+            closeMenuOnSelect={false}
+            options={optionsPosition}
+            classNamePrefix="select"
+            value={selectValue}
+            onChange={(v) => setSelectValue(v)}
+            isMulti
+            placeholder="Выберите должность"
+          />{" "}
+          <button
+            className="btn btn-outline-success ml-3"
+            onClick={SearchFilter}
+          >
+            Поиск
+          </button>
+        </div>
 
         <table className="table table-hover m-3">
           <thead>
@@ -118,7 +123,7 @@ const Employee = () => {
                   </div>
                 </td>
                 <td>
-                  <Link href={`/employee/edit/${x.id}`}>
+                  <Link href={`/employee/edit/${x.id}`} passHref>
                     <svg
                       width="1em"
                       height="1em"

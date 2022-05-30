@@ -122,7 +122,7 @@ const [filter, setFilter] = useState<IFilter>({
                   </div>
                 </td>
                 <td>
-                <Link href={`/group/edit/${x.id}`}>
+                <Link href={`/group/edit/${x.id}`}passHref>
                   <svg
                     width="1em"
                     height="1em"

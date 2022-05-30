@@ -33,7 +33,7 @@ const EditQualification = () => {
     };
     console.log(typeof id === "string");
     id && typeof id === "string" && void fetchQualification(id);
-  }, []);
+  }, [id]);
 
   const onSubmit = async (data: unknown) => {
     if (!id || typeof id !== "string") {

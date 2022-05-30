@@ -92,7 +92,7 @@ const Speciality = () => {
                   </div>
                 </td>
                 <td>
-                  <Link href={`/specialities/edit/${x.id}`}>
+                  <Link href={`/specialities/edit/${x.id}`}passHref>
                     <svg
                       width="1em"
                       height="1em"
