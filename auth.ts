@@ -16,13 +16,12 @@ const firebaseConfig = {
   measurementId: "G-D3JD7RQ3WS",
 };
 
-export const provider = new GoogleAuthProvider();
-
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
+export const provider = new GoogleAuthProvider();
 
 export const onSignOut = () => {
   console.log("signOut");
