@@ -1,5 +1,5 @@
-export const EventСontest = "contest";
-export const EventVisit = "visit";
+export const EventСontest = "Соревнования";
+export const EventVisit = "Посещение";
 export const EventTypeDisplay = {
   [EventСontest]: "Соревнование",
   [EventVisit]: "Посещение",

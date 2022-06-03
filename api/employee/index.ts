@@ -11,7 +11,7 @@ export interface IEmployee {
 export interface IEmployeePost {
   lastName: string;
   firstName: string;
-  middleName: string;
+  middleName?: string;
   phone: string;
   positionId: string;
 }
@@ -20,7 +20,7 @@ export interface IEmployeeGet {
   id: string;
   lastName: string;
   firstName: string;
-  middleName: string;
+  middleName?: string;
   phone: string;
   positionId: string;
 }

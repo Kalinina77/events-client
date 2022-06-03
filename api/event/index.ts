@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IFileObject } from "../../components/DropZone";
 import { IEventRanks } from "./types";
 
 const baseUrl = "https://localhost:5000/api";
@@ -26,7 +27,6 @@ export interface IEventPost {
   type: string;
 }
 
-
 export interface IEventGet {
   id: string;
   name: string;
@@ -42,8 +42,17 @@ export interface IEventGet {
 type EventViewStudentType = {
   id: string;
   name: string;
-  rank:string;
+  rank: string;
+};
+
+export interface IEventFile{
+  id: string;
+  name: string;
+  data: string;
+  eventId: string;
+  
 }
+
 export interface IEventView {
   id: string;
   name: string;
@@ -55,18 +64,20 @@ export interface IEventView {
   students: EventViewStudentType[];
   employeeNames: string[];
   type: string;
-  
+  photos: IEventFile[];
+  documents: IEventFile[];
 }
 
 export interface IEventPut extends IEventPost {
   id: string;
 }
 
-
 export interface IEventPostArrays {
   studentIds: string[];
   groupIds: string[];
   employeeIds: string[];
+  photos?: IFileObject[];
+  documents?: IFileObject[];
   //type: string;
 }
 
@@ -74,12 +85,14 @@ export const getEvent = async (payload: {
   type: string[];
   searchTerm: string;
   dateStart?: Date;
-  dateEnd?: Date ;
+  dateEnd?: Date;
 }) => {
-  const response = await axios.post<IEvent[]>(`${baseUrl}/events/search`, payload);
+  const response = await axios.post<IEvent[]>(
+    `${baseUrl}/events/search`,
+    payload
+  );
   return response.data;
 };
-
 
 export const getEventStudentsCount = async () => {
   const response = await axios.get<IEventStudentsCount[]>(`${baseUrl}/events`);
@@ -111,7 +124,9 @@ export const getEvents = async (id: string) => {
 };
 
 export const getEventRanks = async (id: string) => {
-  const response = await axios.get<IEventRanks[]>(`${baseUrl}/events/${id}/ranks`);
+  const response = await axios.get<IEventRanks[]>(
+    `${baseUrl}/events/${id}/ranks`
+  );
   return response.data;
 };
 
@@ -120,9 +135,11 @@ export const getEventView = async (id: string) => {
   return response.data;
 };
 
-
-export const putEvent = async (id: string,  payload: IEventPost,
-  arrays: IEventPostArrays) => {
+export const putEvent = async (
+  id: string,
+  payload: IEventPost,
+  arrays: IEventPostArrays
+) => {
   const response = await axios.put<string>(`${baseUrl}/events/${id}`, {
     ...payload,
     ...arrays,
@@ -140,6 +157,9 @@ export const exportEvents = async (payload: unknown) => {
 };
 
 export const putEventRanks = async (id: string, payload: IEventRanks[]) => {
-  const response = await axios.put<IEventRanks[]>(`${baseUrl}/events/ranks/${id}`, payload,);
+  const response = await axios.put<IEventRanks[]>(
+    `${baseUrl}/events/ranks/${id}`,
+    payload
+  );
   return response.data;
 };

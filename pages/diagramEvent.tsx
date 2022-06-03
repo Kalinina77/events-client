@@ -24,7 +24,8 @@ const DiagramEvent = () => {
 
   return (
     <div>
-      <div>За этот учебный год..</div>
+      <div> 
+        <h3 className="d-flex justify-content-center ">Мероприятия </h3></div>
       {!!event?.length && (
         <div className="Teams-Chart">
           <VictoryChart
@@ -33,7 +34,7 @@ const DiagramEvent = () => {
             theme={VictoryTheme.material}
            
           >
-            <VictoryBar
+            <VictoryBar horizontal
               style={{
                 data: { fill: "#7B68EE", stroke: "black", strokeWidth: 1 },
               }}
@@ -44,6 +45,7 @@ const DiagramEvent = () => {
            />
             
           </VictoryChart>
+         
         </div>
       )}
     </div>

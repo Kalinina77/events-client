@@ -97,10 +97,19 @@ const AddGroup = () => {
             <label className="input-group-text">Квалификация</label>
           </div>
         </div>
-
+        <div className="d-flex flex-gap">
+       
         <button type="submit" className="btn btn-primary">
           Добавить
         </button>
+        <a
+            href="group"
+            className="btn btn-outline-danger"
+            type="submit"
+          >
+            Отмена
+          </a>
+          </div>
       </form>
     </div>
   );

@@ -66,7 +66,7 @@ const EditSpecialities = () => {
       {specialitie && (
         <EditFormSpecialities
           specialitie={specialitie}
-          qulification={qualification}
+     
           onSubmit={onSubmit}
         />
       )}

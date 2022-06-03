@@ -5,27 +5,73 @@ import Script from "next/script";
 import Header from "../components/Header";
 
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
+import Landing from "./landing";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { onSignOut, auth } from "../auth";
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/learn-more#config-object
-const firebaseConfig = {
-  apiKey: "AIzaSyBojq28TLplE1Tc0kS0Q4jlI7kjyIJbh_M",
-  authDomain: "mazdashop-aa1a0.firebaseapp.com",
-  projectId: "mazdashop-aa1a0",
-  storageBucket: "mazdashop-aa1a0.appspot.com",
-  messagingSenderId: "100795691723",
-  appId: "1:100795691723:web:2e5ba0a3d728ddf24b214e",
-  measurementId: "G-D3JD7RQ3WS",
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBojq28TLplE1Tc0kS0Q4jlI7kjyIJbh_M",
+//   authDomain: "mazdashop-aa1a0.firebaseapp.com",
+//   projectId: "mazdashop-aa1a0",
+//   storageBucket: "mazdashop-aa1a0.appspot.com",
+//   messagingSenderId: "100795691723",
+//   appId: "1:100795691723:web:2e5ba0a3d728ddf24b214e",
+//   measurementId: "G-D3JD7RQ3WS",
+// };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// const provider = new GoogleAuthProvider();
 
-// Initialize Firebase Authentication and get a reference to the service
-const auth = getAuth(app);
+// // Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+
+// // Initialize Firebase Authentication and get a reference to the service
+// const auth = getAuth(app);
+
+// const onSignOut = () => {
+// console.log("signOut")
+//   signOut(auth);
+// } 
+
+// export const onGoogleSignIn = () => {
+//   signInWithPopup(auth, provider)
+//     .then((result) => {
+//       // This gives you a Google Access Token. You can use it to access the Google API.
+//       const credential = GoogleAuthProvider.credentialFromResult(result);
+//       const token = credential?.accessToken;
+//       // The signed-in user info.
+//       const user = result.user;
+//       // ...
+//     })
+//     .catch((error) => {
+//       // Handle Errors here.
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//       // The email of the user's account used.
+//       const email = error.email;
+//       // The AuthCredential type that was used.
+//       const credential = GoogleAuthProvider.credentialFromError(error);
+//       // ...
+//     });
+// };
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter()
+  const { currentUser } = auth
+  console.log( router.pathname);
+  // useEffect(() => {
+  //   if (!(router.pathname === "/landing") && !currentUser) {
+  //     router.push('/landing')
+  //   }
+  // }, [currentUser, router]);
   return (
     <div>
       <Head>
@@ -44,9 +90,23 @@ function MyApp({ Component, pageProps }: AppProps) {
           defer
         ></script>
       </Head>
-      <Header />
-      <div className="py-3 px-5">
-        <Component {...pageProps} />
+      <div>
+        {/* {!auth?.currentUser ? (
+          <Landing onSignIn={onGoogleSignIn} />
+        ) : (
+          <>
+            <Header signOut={onSignOut} visible={!!auth?.currentUser} />
+            <div className="py-3 px-5">
+              <Component {...pageProps} />
+            </div>
+          </>
+        )} */}
+
+        {/* <Header signOut={onSignOut} visible={!!auth?.currentUser} /> */}
+        <Header signOut={onSignOut} visible={true} />
+        <div className="py-3 px-5">
+          <Component {...pageProps}  />
+        </div>
       </div>
       <Script
         id="stripe-js"

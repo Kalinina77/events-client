@@ -136,9 +136,7 @@ const TableEvents = () => {
             <th scope="col">Дата начала</th>
             <th scope="col">Дата конца</th>
             <th>
-              <div className="form-check">
-                <input type="checkbox" className="form-check-input" />
-              </div>
+             
             </th>
           </tr>
         </thead>

@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { IEventGet, IEventView } from "../api/event";
 
 interface IViewForm {
@@ -8,7 +8,7 @@ interface IViewForm {
 }
 const ViewEventForm = (props: IViewForm) => {
   const { event } = props;
-
+const [activImage, setActivImage] = useState(0);
   return (
     <div>
       <h2 className="d-flex justify-content-center mb-3">
@@ -76,8 +76,37 @@ const ViewEventForm = (props: IViewForm) => {
           </table>
         </div>
       </div>
-
+     
+      
+    
       <h3>фото и файл</h3>
+      <div>
+        {/* {event.photos.map(x=> <img key={x.id} src={x.data} alt={x.name}></img>)} */}
+
+        <div id="carouselExampleIndicators " className="carousel slide w-50 " data-ride="carousel">
+  <ol className="carousel-indicators">
+  {event.photos.map((x, index)=>  <li key={x.id} data-target="#carouselExampleIndicators" 
+  data-slide-to={index.toString()} className={index === activImage ? "active": "" }></li>)}
+    
+  </ol>
+  <div className="carousel-inner">
+
+    {event.photos.map((x, index)=>  <div key={x.id} className={`carousel-item ${index === activImage ? "active": ""} ` }
+     ><img className="d-block w-100"  src={x.data} alt={x.name}></img></div>)}
+  
+  </div>
+  <button onClick={()=> setActivImage(state=> state <= 0? event.photos.length - 1: state-1 )} className="carousel-control-prev" >
+    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span className="sr-only"></span>
+  </button>
+  <button onClick={()=> setActivImage(state=> state >= event.photos.length - 1 ? 0: state+1 )} className="carousel-control-next" >
+  <span className="carousel-control-next-icon" aria-hidden="true"></span>
+    <span className="sr-only"></span>
+  </button>
+ 
+</div>
+{event.documents.map(x=> <div key={x.id} > {x.name}</div>)}
+      </div>
     </div>
   );
 };

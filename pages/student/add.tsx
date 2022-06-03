@@ -209,10 +209,19 @@ const AddStudents: React.FC = () => {
         </div>
         {errors?.birthdate?.type === "required" && (
           <p>Поле День рождения обязательно для заполнения</p>
-        )}
+        )} 
+        <div className="d-flex flex-gap">
         <button type="submit" className="btn btn-primary">
           Добавить
         </button>
+        <a
+            href="../../students"
+            className="btn btn-outline-danger"
+            type="submit"
+          >
+            Отмена
+          </a>
+          </div>
       </form>
     </div>
   );

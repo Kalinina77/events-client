@@ -94,7 +94,7 @@ const AddEmployee = () => {
         <div className="input-group mb-3 ">
           <input
             {...register("middleName", {
-              required: true,
+             
               maxLength: 50,
               pattern: /^[А-Яа-я]+$/i,
             })}
@@ -102,9 +102,6 @@ const AddEmployee = () => {
             placeholder="Отчество"
           />
         </div>
-        {errors?.middleName?.type === "required" && (
-          <p>Поле Имя обязательно для заполнения</p>
-        )}
         {errors?.middleName?.type === "maxLength" && (
           <p>Имя не может быть больше 50 символов</p>
         )}
@@ -154,10 +151,18 @@ const AddEmployee = () => {
           <p>Поле заполненно некорректно</p>
         )}
       
-
+      <div className="d-flex flex-gap">
         <button type="submit" className="btn btn-primary">
           Добавить
         </button>
+        <a
+            href="employee"
+            className="btn btn-outline-danger"
+            type="submit"
+          >
+            Отмена
+          </a>
+          </div>
       </form>
     </div>
   );

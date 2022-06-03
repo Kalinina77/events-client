@@ -5,11 +5,11 @@ import { ISpecialityGet } from '../api/speciality';
 
 interface IEditForm {
   specialitie: ISpecialityGet;
-  qulification: IQualification[];
+ 
   onSubmit: (data: unknown) => void;
 }
 const EditFormSpecialities = (props: IEditForm) => {
-  const { specialitie, qulification, onSubmit } = props;
+  const { specialitie, onSubmit } = props;
 
   const {
     register,
@@ -40,20 +40,7 @@ const EditFormSpecialities = (props: IEditForm) => {
         {errors?.name?.type === "pattern" && <p>Поле заполненно некорректно</p>}
         
 
-    <div className="input-group mb-3">
-      <select
-        className="form-control"
-        placeholder="Выберите..."
-        {...register("qualificationId")}
-      >
-        {qulification.map((x) => (
-          <option key={x.id} value={x.id}>{x.name}</option>
-        ))}
-      </select>
-      <div className="input-group-append">
-        <label className="input-group-text">Квалификация</label>
-      </div>
-    </div>
+   
 
    
     <button type="submit" className="btn btn-primary">

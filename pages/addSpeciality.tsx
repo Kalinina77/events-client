@@ -73,11 +73,19 @@ const AddSpeciality = () => {
         )}
         {errors?.Name?.type === "pattern" && <p>Поле заполненно некорректно</p>}
         
-        
-
+        <div className="d-flex flex-gap">
+                       
         <button type="submit" className="btn btn-primary">
           Добавить
-        </button>
+        </button> 
+        <a
+            href="speciality"
+            className="btn btn-outline-danger"
+            type="submit"
+          >
+            Отмена
+          </a>
+          </div>
         </form>
     </div>
   )

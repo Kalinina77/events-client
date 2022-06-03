@@ -8,7 +8,11 @@ import { useRouter, Router } from "next/router";
 import Select, { MultiValue } from "react-select";
 import { EventTypeOptions } from "../constants/eventType";
 import { SelectValueType } from "../constants/types";
+import { Dropzone, IFileObject } from "../components/DropZone";
 
+interface IFilter {
+  GroupIds: string[];
+}
 const AddEvent = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [group, setGroup] = useState<IGroup[]>([]);
@@ -19,9 +23,15 @@ const AddEvent = () => {
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
-  const [selectType, setSelectType] = useState<MultiValue<SelectValueType>>(
+  const [filter, setFilter] = useState<IFilter>({
+    GroupIds: [],
+  });
+  const [selectValue, setSelectValue] = useState<MultiValue<SelectValueType>>(
     []
   );
+
+  const [images, setImages] = useState<IFileObject[]>([]);
+  const [documents, setDocumetns] = useState<IFileObject[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -43,12 +53,12 @@ const AddEvent = () => {
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const res = await searchStudents({});
+        const res = await searchStudents(filter);
         setStudents(res);
       } catch {}
     };
     void fetchStudent();
-  }, []);
+  }, [filter]);
 
   useEffect(() => {
     const fetchGroup = async () => {
@@ -65,9 +75,10 @@ const AddEvent = () => {
       setLoading(true);
       await postEvent(data as IEventPost, {
         employeeIds: selectedEmployees,
-        groupIds: selectedGroups,
+        groupIds: selectValue.map((x) => x.value),
         studentIds: selectedStudents,
-        
+        photos: images,
+        documents: documents,
       });
       router.push("/event");
     } catch {
@@ -75,8 +86,6 @@ const AddEvent = () => {
     } finally {
       setLoading(false);
     }
-
-    console.log(data);
   };
 
   const toggleCheckboxStudents = (id: string) => {
@@ -86,19 +95,22 @@ const AddEvent = () => {
       setSelectedStudents((state) => [...state, id]);
     }
   };
-  const toggleCheckboxGroups = (id: string) => {
-    if (selectedGroups.some((z) => z === id)) {
-      setSelectedGroups((state) => state.filter((z) => z !== id));
-    } else {
-      setSelectedGroups((state) => [...state, id]);
-    }
-  };
+
   const toggleCheckboxEmployees = (id: string) => {
     if (selectedEmployees.some((z) => z === id)) {
       setSelectedEmployees((state) => state.filter((z) => z !== id));
     } else {
       setSelectedEmployees((state) => [...state, id]);
     }
+  };
+
+  const optionsGroup = group.map((g) => ({
+    value: g.id,
+    label: g.name,
+  }));
+
+  const ApplyFilter = () => {
+    setFilter({ GroupIds: selectValue.map((s) => s.value) });
   };
 
   return (
@@ -115,7 +127,6 @@ const AddEvent = () => {
             {...register("name", {
               required: true,
               maxLength: 50,
-              pattern: /^[А-Яа-я A-Za-z 0-9 - . ]+$/i,
             })}
             className="form-control"
             placeholder="Название"
@@ -127,28 +138,26 @@ const AddEvent = () => {
         {errors?.name?.type === "maxLength" && (
           <p>Название не может быть больше 50 символов</p>
         )}
-        {errors?.name?.type === "pattern" && <p>Поле заполненно некорректно</p>}
+
         <div className="input-group mb-3 ">
-        <select
-          className="input-group-prepend w-100 "
-          {...register("type", {
-            required: true,
-          })}
-          
-        >
-          {EventTypeOptions.map((x) => (
-            <option key={x.value} value={x.value}>
-              {x.label}
-            </option>
-          ))}
-        </select>
-          </div>
+          <select
+            className="form-control"
+            {...register("type", {
+              required: true,
+            })}
+          >
+            {EventTypeOptions.map((x) => (
+              <option key={x.value} value={x.value}>
+                {x.label}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="input-group mb-3 ">
           <input
             {...register("place", {
               required: true,
               maxLength: 100,
-             
             })}
             className="form-control"
             placeholder="Место проведения"
@@ -160,7 +169,7 @@ const AddEvent = () => {
         {errors?.place?.type === "maxLength" && (
           <p>Место проведения не может быть больше 50 символов</p>
         )}
-        
+
         <div className="form-group mb-3">
           <textarea
             {...register("description", {
@@ -210,33 +219,27 @@ const AddEvent = () => {
           )}
         </div>
 
+        <div className="d-flex justify-content-start flex-gap pt-3">
+          <Select
+            className="input-group-prepend  "
+            closeMenuOnSelect={false}
+            options={optionsGroup}
+            classNamePrefix="select"
+            value={selectValue}
+            onChange={(v) => setSelectValue(v)}
+            isMulti
+            placeholder="Выберите группы"
+          />{" "}
+          <button
+            className="btn btn-outline-success ml-4  "
+            onClick={(e) => {
+              e.preventDefault();
+              ApplyFilter()}}
+          >
+            Поиск
+          </button>
+        </div>
         <div className="d-flex flex-ct ">
-          <table className="table table-hover w-25">
-            <thead>
-              <tr>
-                <th scope="col">Группы</th>
-              </tr>
-            </thead>
-            <tbody>
-              {group.map((x) => (
-                <tr key={x.id}>
-                  <td>{x.name}</td>
-                  <td>
-                    {" "}
-                    <div className="form-check">
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        checked={selectedGroups.some((z) => z === x.id)}
-                        onChange={() => toggleCheckboxGroups(x.id)}
-                      />{" "}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
           <table className="table table-hover w-25">
             <thead>
               <tr>
@@ -289,12 +292,37 @@ const AddEvent = () => {
         </div>
 
         <div className="d-flex flex-gap">
+          <Dropzone
+            files={images}
+            setFiles={setImages}
+            buttonText="Добавить фото"
+          />
+          <Dropzone files={documents} setFiles={setDocumetns} />
           <button type="submit" className="btn btn-primary">
             Добавить
           </button>
-          <button className="btn btn-primary">Добавить фото</button>
-          <button className="btn btn-primary">Добавить файл</button>
+          <a href="event" className="btn btn-outline-danger">
+            Отмена
+          </a>
+
+          {/* <input
+          type="file"
+          name="myFile"
+          accept=".jpeg, .png, .jpg"
+          onChange={(e) => handleFileUpload(e)}
+        />
+         {postImage && <img src={postImage.myFile} />} */}
         </div>
+        {/* {images.length > 0 && (
+          <>
+            <div>IMAGES</div>
+            <div>
+              {images.map((x, index) => (
+                <img key={index} src={x.data} />
+              ))}
+            </div>
+          </>
+        )} */}
       </form>
     </div>
   );

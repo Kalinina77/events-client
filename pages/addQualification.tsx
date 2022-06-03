@@ -81,10 +81,18 @@ const AddQualification = () => {
             <label className="input-group-text">Специальность</label>
           </div>
         </div>
-
+        <div className="d-flex flex-gap">
         <button type="submit" className="btn btn-primary">
           Добавить
         </button>
+         <a
+            href="qualification"
+            className="btn btn-outline-danger"
+            type="submit"
+          >
+            Отмена
+          </a>
+        </div>
       </form>
     </div>
   );

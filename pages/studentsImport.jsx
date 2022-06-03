@@ -46,12 +46,13 @@ const StudentsImport = () => {
         onChange={fileHandler}
         className="btn btn-outline-primary "
       />
+      
       {data && (
-        <OutTable className=" w-100%"
+        <OutTable className="w-100% "
           data={data.rows}
           columns={data.cols}
-          tableClassName="ExcelTable2007"
-          tableHeaderRowClass="heading"
+          tableClassName="ExcelTable2007 p-2 table table-hover m-3"
+          tableHeaderRowClass="heading  "
         />
       )}
 </div>
@@ -60,7 +61,9 @@ const StudentsImport = () => {
         <a className="btn btn-primary" >Отмена</a>
       </Link>
       <button className="btn btn-primary" onClick={importRequest}>OK</button>
-    </div></div></div>
+    </div></div>
+        
+    </div>
   );
 };
 
