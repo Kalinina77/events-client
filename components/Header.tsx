@@ -1,16 +1,12 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import { signOut } from "next-auth/react";
 
-interface IHeader {
-  signOut: () => void;
-  visible?: boolean;
-}
-const Header = (props: IHeader) => {
-  const { visible, signOut } = props;
+const Header = () => {
   return (
     <>
-      {visible && (
+      {true && (
         <div>
           <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <a>h</a>
@@ -80,7 +76,7 @@ const Header = (props: IHeader) => {
                 </li>
                 <li className="nav-item  ">
                   {/* <a className="nav-link">Выйти</a> */}
-                  <button className="btn btn-dark" onClick={signOut}>
+                  <button className="btn btn-dark" onClick={() => signOut()}>
                     Выйти
                   </button>
                 </li>

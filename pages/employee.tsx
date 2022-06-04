@@ -5,6 +5,9 @@ import { SelectValueType } from "../constants/types";
 import Select, { MultiValue } from "react-select";
 import { IPosition } from "../api/position";
 import { GetPositions } from "../api/post";
+import { getSession } from "next-auth/react";
+import { GetServerSidePropsContext, PreviewData } from "next";
+import { ParsedUrlQuery } from "querystring";
 
 interface IFilter {
   PositionIds: string[];
@@ -164,3 +167,19 @@ const Employee = () => {
 };
 
 export default Employee;
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
+) => {
+  const session = await getSession(context);
+  if (!session) {
+    context.res.writeHead(302, { Location: "/" });
+    context.res.end();
+    return {};
+  }
+  return {
+    props: {
+      user: session.user,
+    },
+  };
+};

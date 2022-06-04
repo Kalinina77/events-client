@@ -41,7 +41,7 @@ const DiagramEvent = () => {
               data={event.map((x) => ({ name: x.name, count: x.studentCount }))}
               x="name"
               y="count"
-              labelComponent={<VictoryLabel angle={-45} labelPlacement="vertical" direction=" "/>}
+              labelComponent={<VictoryLabel angle={-45} labelPlacement="vertical" direction="ltr"/>}
            />
             
           </VictoryChart>

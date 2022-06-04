@@ -9,6 +9,9 @@ import {
 import Select, { MultiValue } from "react-select";
 import { SelectValueType } from "../constants/types";
 import { getSpeciality, getSpecialitys, ISpeciality } from "../api/speciality";
+import { GetServerSidePropsContext, PreviewData } from "next";
+import { getSession } from "next-auth/react";
+import { ParsedUrlQuery } from "querystring";
 
 interface IFilter {
   SpecialityIds: string[];
@@ -166,3 +169,19 @@ const Qualification = () => {
 };
 
 export default Qualification;
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
+) => {
+  const session = await getSession(context);
+  if (!session) {
+    context.res.writeHead(302, { Location: "/" });
+    context.res.end();
+    return {};
+  }
+  return {
+    props: {
+      user: session.user,
+    },
+  };
+};

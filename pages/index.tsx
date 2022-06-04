@@ -1,52 +1,54 @@
 import type { NextPage } from "next";
-import React, { useCallback, useEffect, useState } from "react";
-import { VictoryBar, VictoryChart, VictoryLabel, VictoryTheme } from "victory";
-import { getEventStudentsCount, IEventStudentsCount } from "../api/event";
+import { signIn, useSession } from "next-auth/react";
+import React from "react";
+import DiagramEvent from "./diagramEvent";
+import Image from "next/image";
 
 const Home: NextPage = () => {
-  const [event, setEvent] = useState<IEventStudentsCount[]>([]);
+  const { data: session } = useSession();
 
-  const fetchEvent = useCallback(async () => {
-    try {
-      const res = await getEventStudentsCount();
-      setEvent(res);
-    } catch {}
-  }, []);
-  useEffect(() => {
-    void fetchEvent();
-  }, [fetchEvent]);
   return (
-    <div>
-      <div>
-        <h3 className="d-flex justify-content-center ">Мероприятия </h3>
-      </div>
-      {!!event?.length && (
-        <div className="Teams-Chart">
-          <VictoryChart
-            padding={{ top: 20, bottom: 30, left: 40, right: 20 }}
-            domainPadding={{ x: 20 }}
-            theme={VictoryTheme.material}
-          >
-            <VictoryBar
-              horizontal
-              style={{
-                data: { fill: "#7B68EE", stroke: "black", strokeWidth: 1 },
-              }}
-              data={event.map((x) => ({ name: x.name, count: x.studentCount }))}
-              x="name"
-              y="count"
-              labelComponent={
-                <VictoryLabel
-                  angle={-45}
-                  labelPlacement="vertical"
-                  // direction=""
-                />
-              }
-            />
-          </VictoryChart>
+    <>
+      {!session ? (
+        <div>
+          <video
+            src="main.mp4"
+            preload="auto"
+            playsInline
+            autoPlay
+            loop
+            id="myVideo"
+          ></video>
+
+          <div className="content">
+            <a>
+              <Image src="/logo.svg" width="100" height="100" alt="" />
+              Российский экономический университет имени Г.В. Плеханова
+            </a>
+            <p></p>
+
+            <div className="m-3">
+              Разработка информационно-справочной системы формирования
+              статистических отчетов мероприятий учебного заведения
+              <br />
+              (на примере ФГБОУ ВО «Российский экономический университет им.
+              Г.В. Плеханова»)
+            </div>
+
+            <div>
+              <button
+                className="btn btn-outline-light"
+                onClick={() => signIn()}
+              >
+                Войти GOOGLE
+              </button>
+            </div>
+          </div>
         </div>
+      ) : (
+        <DiagramEvent />
       )}
-    </div>
+    </>
   );
 };
 
