@@ -55,10 +55,10 @@ const [activImage, setActivImage] = useState(0);
 
             <dt className="col-sm-3 text-truncate">Дата конца:</dt>
             <dd className="col-sm-9">
-              {format(new Date(event.dateEnd), "dd.MM.yyyy")}
+              {format(new Date(event.dateEnd), "dd.MM.yyyy")}.
             </dd>
-            <dt className="col-sm-3">Группы:</dt>
-            <dd className="col-sm-9">{event.groupNames.join(", ")}</dd>
+          {/*  <dt className="col-sm-3">Группы:</dt>
+            <dd className="col-sm-9">{event.groupNames.join(", ")}</dd>}*/}
           </dl>
           <table className="table table-hover  px-1">
             <thead>
@@ -78,9 +78,9 @@ const [activImage, setActivImage] = useState(0);
       </div>
      
       
+    <h5 className="d-flex justify-content-center mb-3">Фото и файлы мероприятия: </h5>
     
-      <h3>фото и файл</h3>
-      <div>
+      <div className="d-flex flex-ct">
         {/* {event.photos.map(x=> <img key={x.id} src={x.data} alt={x.name}></img>)} */}
 
         <div id="carouselExampleIndicators " className="carousel slide w-50 " data-ride="carousel">
@@ -105,7 +105,8 @@ const [activImage, setActivImage] = useState(0);
   </button>
  
 </div>
-{event.documents.map(x=> <div key={x.id} > {x.name}</div>)}
+<div className="w-25 d-none d-md-block">
+{event.documents.map(x=>  <div className="" key={x.id} > {x.name}</div>)}</div>
       </div>
     </div>
   );

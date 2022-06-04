@@ -80,7 +80,7 @@ const Header = (props: IHeader) => {
                 </li>
                 <li className="nav-item  ">
                   {/* <a className="nav-link">Выйти</a> */}
-                  <button className="nav-link" onClick={signOut}>
+                  <button className="btn btn-dark" onClick={signOut}>
                     Выйти
                   </button>
                 </li>

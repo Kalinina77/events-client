@@ -298,12 +298,15 @@ const AddEvent = () => {
             buttonText="Добавить фото"
           />
           <Dropzone files={documents} setFiles={setDocumetns} />
+          </div>
+          <div className="d-flex flex-gap">
           <button type="submit" className="btn btn-primary">
             Добавить
           </button>
           <a href="event" className="btn btn-outline-danger">
             Отмена
           </a>
+         </div>
 
           {/* <input
           type="file"
@@ -312,7 +315,7 @@ const AddEvent = () => {
           onChange={(e) => handleFileUpload(e)}
         />
          {postImage && <img src={postImage.myFile} />} */}
-        </div>
+       
         {/* {images.length > 0 && (
           <>
             <div>IMAGES</div>

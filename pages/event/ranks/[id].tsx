@@ -39,7 +39,7 @@ const EventRanks = () => {
     };
   return (
       <div>
-       <table className="table table-hover w-25">
+       <table className="table table-hover ">
           <thead>
             <tr>
               <th scope="col">Студенты</th>
