@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { getGroups, IGroup } from "../../../api/group";
 import {
   IStudentGet,
@@ -34,7 +33,7 @@ const StudentEdit = () => {
     const fetchStudent = async (id: string) => {
       try {
         const res = await getStudent(id);
-        console.log("in fetch student",res);
+        console.log("in fetch student", res);
         setStudent(res);
       } catch {}
     };
@@ -49,15 +48,13 @@ const StudentEdit = () => {
     try {
       setLoading(true);
       await putStudents(id, data as IStudentPut);
-      router.push("/students")
+      router.push("/students");
     } catch {
       console.error("error creating student");
     } finally {
       setLoading(false);
     }
   };
-
- 
 
   return (
     <div className="">
