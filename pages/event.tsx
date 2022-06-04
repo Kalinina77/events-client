@@ -5,6 +5,9 @@ import { deleteEvent, getEvent, IEvent } from "../api/event";
 import Select, { MultiValue } from "react-select";
 import { SelectValueType } from "../constants/types";
 import { EventTypeOptions } from "../constants/eventType";
+import { GetServerSidePropsContext, PreviewData } from "next";
+import { getSession } from "next-auth/react";
+import { ParsedUrlQuery } from "querystring";
 
 interface IFilter {
   type: string[];
@@ -155,3 +158,19 @@ const Event = () => {
 };
 
 export default Event;
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
+) => {
+  const session = await getSession(context);
+  if (!session) {
+    context.res.writeHead(302, { Location: "/" });
+    context.res.end();
+    return {};
+  }
+  return {
+    props: {
+      user: session.user,
+    },
+  };
+};

@@ -4,6 +4,9 @@ import Link from "next/link";
 import Select, { MultiValue } from "react-select";
 import { getGroups, IGroup } from "../api/group";
 import { SelectValueType } from "../constants/types";
+import { GetServerSidePropsContext, PreviewData } from "next";
+import { getSession } from "next-auth/react";
+import { ParsedUrlQuery } from "querystring";
 
 interface IFilter {
   GroupIds: string[];
@@ -193,3 +196,19 @@ const StudentsPage = () => {
 };
 
 export default StudentsPage;
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
+) => {
+  const session = await getSession(context);
+  if (!session) {
+    context.res.writeHead(302, { Location: "/" });
+    context.res.end();
+    return {};
+  }
+  return {
+    props: {
+      user: session.user,
+    },
+  };
+};

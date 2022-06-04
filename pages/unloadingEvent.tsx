@@ -1,3 +1,6 @@
+import { GetServerSidePropsContext, PreviewData } from "next";
+import { getSession } from "next-auth/react";
+import { ParsedUrlQuery } from "querystring";
 import React from "react";
 
 import TableEvents from "../components/TableEvents";
@@ -68,3 +71,19 @@ const UnloadingEvent = () => {
 };
 
 export default UnloadingEvent;
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
+) => {
+  const session = await getSession(context);
+  if (!session) {
+    context.res.writeHead(302, { Location: "/" });
+    context.res.end();
+    return {};
+  }
+  return {
+    props: {
+      user: session.user,
+    },
+  };
+};

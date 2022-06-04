@@ -1,4 +1,3 @@
-import { getAuth } from "firebase/auth";
 import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
 import { deleteGroup, getGroups, IGroup } from "../api/group";
@@ -6,8 +5,11 @@ import { getQualifications, IQualification } from "../api/qualifications";
 
 import Select, { MultiValue } from "react-select";
 import { SelectValueType } from "../constants/types";
+import { GetServerSidePropsContext, PreviewData } from "next";
+import { getSession } from "next-auth/react";
+import { ParsedUrlQuery } from "querystring";
 
-const auth = getAuth();
+
 interface IFilter {
   QualificationIds: string[];
   searchTerm: string;
@@ -22,7 +24,7 @@ const [filter, setFilter] = useState<IFilter>({
   QualificationIds: [],
   searchTerm: "",
 });
-  console.log(auth)
+ 
    const fetchGroup = useCallback(async () => {
       try {
         const res = await getGroups(filter);
@@ -160,3 +162,19 @@ const [filter, setFilter] = useState<IFilter>({
 };
 
 export default Group;
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
+) => {
+  const session = await getSession(context);
+  if (!session) {
+    context.res.writeHead(302, { Location: "/" });
+    context.res.end();
+    return {};
+  }
+  return {
+    props: {
+      user: session.user,
+    },
+  };
+};
