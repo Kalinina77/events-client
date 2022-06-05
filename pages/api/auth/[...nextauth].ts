@@ -13,6 +13,7 @@ const options = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     }),
   ],
+  secret: process.env.SECRET
 };
 
 export default (req: NextApiRequest, res: NextApiResponse) =>  NextAuth(req, res, options);
