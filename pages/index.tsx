@@ -9,7 +9,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      {!session ? (
+     {/* {!session ? (
         <div>
           <video
             src="main.mp4"
@@ -45,9 +45,9 @@ const Home: NextPage = () => {
             </div>
           </div>
         </div>
-      ) : (
+              ) : (*/}
         <DiagramEvent />
-      )}
+    {/*  )}*/}
     </>
   );
 };

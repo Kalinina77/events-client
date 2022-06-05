@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "https://localhost:5000/api";
+const baseUrl = "https://dotnet-api-1.herokuapp.com/api";
 
 export interface IGroup{
     id: string;

@@ -2,7 +2,7 @@ import axios from "axios";
 import { IFileObject } from "../../components/DropZone";
 import { IEventRanks } from "./types";
 
-const baseUrl = "https://localhost:5000/api";
+const baseUrl = "https://dotnet-api-1.herokuapp.com/api";
 
 export interface IEvent {
   id: string;

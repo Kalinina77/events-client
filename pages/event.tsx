@@ -159,18 +159,18 @@ const Event = () => {
 
 export default Event;
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
-) => {
-  const session = await getSession(context);
-  if (!session) {
-    context.res.writeHead(302, { Location: "/" });
-    context.res.end();
-    return {};
-  }
-  return {
-    props: {
-      user: session.user,
-    },
-  };
-};
+// export const getServerSideProps = async (
+//   context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
+// ) => {
+//   const session = await getSession(context);
+//   if (!session) {
+//     context.res.writeHead(302, { Location: "/" });
+//     context.res.end();
+//     return {};
+//   }
+//   return {
+//     props: {
+//       user: session.user,
+//     },
+//   };
+// };
